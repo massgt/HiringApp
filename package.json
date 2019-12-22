@@ -4,7 +4,8 @@
   "description": "Hiring Channel App",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js"
+    "start": "node index.js",
+    "server": "nodemon index.js"
   },
   "author": "Sigit Wijaya P",
   "license": "ISC",

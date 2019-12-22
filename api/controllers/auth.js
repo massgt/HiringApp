@@ -1,5 +1,6 @@
 'use strict'
 require ('dotenv/config');
+
 const model = require ('../../models/auth');
 const form = require ('../helpers/form');
 const bcrypt = require ('bcryptjs');
@@ -7,36 +8,31 @@ const jwt = require ('jsonwebtoken');
 
 module.exports = {
         register: (req, res) =>{
-            const {body} = req;
-            const regExp = /^(\D){6,}$/.test(body.username);
+            const {body} =  req
+            const regex = /^(\D){6,}$/.test(body.username);
             const password = bcrypt.hashSync(body.password,8);
-            
-            if (regExp == true){
-                model.register(req,body.username,password,body.role)
+
+            if (regex == true) {
+                model.register(req, body.username, password, body.role)
                 .then(response => {
-                    form.success(res,response)})
+                    form.success(res, response)
+                })
                 .catch(err => {
                     res.json({
-                        status:"error",
-                        msg:err,
+                        status: 'error',
+                        err,
                     })
-                });
-            }
-            else {
-                res.json({
-                    error: true,
-                    message: 'Invalid Username!'
                 })
             }
-
         },
         login : (req, res) => {
             const role = req.body.role
             const username = req.body.username
+            //console.log(username);
             const password = req.body.password
             if(!username){
                 res.json({
-                    message : 'username required'
+                    message : 'Username Required'
                 })
             } else {
                 model.login(username,role)
@@ -48,7 +44,7 @@ module.exports = {
                         })
                     }
                     else {
-                        jwt.sign({response},process.env.SECRET,{expiresIn: '1d'},(err,token) => {
+                        jwt.sign({response},process.env.KEY,{expiresIn: '1d'},(err,token) => {
                             res.json({
                                 message:"Login Success!",
                                 username: response[0].username,

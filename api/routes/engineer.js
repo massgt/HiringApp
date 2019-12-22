@@ -18,18 +18,13 @@ module.exports = (app) => {
 
 const express = require ('express');
 const controller = require ('../controllers/engineer');
-//const authCheck = require ('../helpers/authCheck');
+const authCheck = require ('../helpers/authCheck');
 
 const Router = express.Router();
 
 Router.get ('/', controller.getAllEngineer); 
-Router.post ('/', controller.postEngineer); 
-Router.patch ('/:id_engineer', controller.patchEngineer); 
-Router.delete ('/:id_engineer', controller.deleteEngineer);
-
-/**Router.get ('/', authCheck.engineerCheck, controller.getAllEngineer); 
 Router.post ('/', authCheck.engineerCheck, controller.postEngineer); 
 Router.patch ('/:id_engineer', authCheck.engineerCheck, controller.patchEngineer) 
-Router.delete ('/:id_engineer', authCheck.engineerCheck, controller.deleteEngineer)*/
+Router.delete ('/:id_engineer', authCheck.engineerCheck, controller.deleteEngineer)
 
 module.exports = Router;

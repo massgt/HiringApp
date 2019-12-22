@@ -68,16 +68,3 @@ module.exports = {
     }
 
 };
-
-/**`SELECT dbengineer.id_engineer, dbengineer.name_engineer, dbengineer.desc_engineer, dbengineer.loc_engineer,
-            GROUP_CONCAT(DISTINCT skill.Skill) AS Skills,
-            dbengineer.dateofbirth, dbengineer.showcase, dbengineer.date_created,
-            dbengineer.date_update FROM dbengineer LEFT JOIN skill ON dbengineer.id_engineer = skill.id_engineer
-             ORDER BY \`dbengineer\`.\`name_engineer\` ASC, \`skill_engineer\` ASC,
-            \`dbengineer\`.\`date_update\` ASC LIMIT ${limit} OFFSET ${offset}` */
-
-/**`SELECT dbengineer.id_engineer, dbengineer.name_engineer, dbengineer.desc_engineer, dbengineer.loc_engineer,
-            dbengineer.dateofbirth, skill.Skill, dbengineer.showcase, dbengineer.date_created,
-            dbengineer.date_update FROM dbengineer LEFT JOIN skill ON dbengineer.id_engineer = skill.id_engineer
-             ORDER BY \`dbengineer\`.\`name_engineer\` ASC, \`skill_engineer\` ASC,
-            \`dbengineer\`.\`date_update\` ASC LIMIT ${limit} OFFSET ${offset}` */

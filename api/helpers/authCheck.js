@@ -1,6 +1,6 @@
 'use strict';
 
-require ('/dotenv/config');
+require ('dotenv/config');
 const jwt = require('jsonwebtoken');
 
 module.exports = {
@@ -13,7 +13,7 @@ module.exports = {
         }
         const token = authorization.split(" ")[1]
         //decode jwt and validation
-        jwt.verify(token, process.env.SECRET_KEY, (err, decoded) => {
+        jwt.verify(token, process.env.KEY, (err, decoded) => {
             if(err && err.name === 'JsonWebTokenError'){
                 return res.json({
                     message: 'Invalid Token'
@@ -26,12 +26,12 @@ module.exports = {
             }
 
             //check if token is registered with correct email
-            if(username !== decoded.result[0].username){
+            if(username !== decoded.response[0].username){
                 return res.json({
                     message : 'Token is not Valid for selected email'
                 })
             }
-            if(decoded.result[0].role !== 'engineer'){
+            if(decoded.response[0].role !== 'engineer'){
                 return res.status(403).json({
                     message: 'Access Denied!'
                 })
@@ -48,7 +48,8 @@ module.exports = {
         }
         const token = authorization.split(" ")[1]
         //decode JWT and validation
-        jwt.verify(token, process.env.SECRET_KEY, (err, decoded)=>{
+        jwt.verify(token, process.env.KEY, (err, decoded)=>{
+            console.log(decoded)
             if(err && err.name === 'JsonWebTokenError'){
                 return res.json({ 
                     message: 'Invalid Token!'
@@ -61,7 +62,7 @@ module.exports = {
             }
 
             //check if token is registered with correct username
-            if(username !== decoded.result[0].username){
+            if(username !== decoded.response[0].username){
                 return res.json({
                     message : 'Token is not Valid for selected email'
                 })
@@ -83,7 +84,7 @@ module.exports = {
         }
         const token = authorization.split(" ")[1]
         //decode JWT and validation
-        jwt.verify(token, process.env.SECRET_KEY, (err, decoded)=>{
+        jwt.verify(token, process.env.KEY, (err, decoded)=>{
             if(err && err.name === 'JsonWebTokenError'){
                 return res.json({ 
                     message: 'Invalid Token!'
@@ -96,7 +97,7 @@ module.exports = {
             }
 
             //check if token is registered with correct email
-            if(username !== decoded.result[0].username){
+            if(username !== decoded.response[0].username){
                 return res.status(403).json({
                     message : 'Token is not Valid for selected email'
                 })
