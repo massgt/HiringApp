@@ -4,6 +4,7 @@ const express = require('express');
 const index = express();
 const bodyParser = require ('body-parser');
 const router = require ('./api/routes/index');
+const cors = require ('cors');
 
 index.listen (process.env.APP_PORT, () => {
     console.log('Server up and running on PORT : ', process.env.APP_PORT);
@@ -16,6 +17,8 @@ index.use (
 );
 
 index.use (bodyParser.json ());
+
+index.use (cors());
 
 index.use ('/', router); // localhost:3000/
 

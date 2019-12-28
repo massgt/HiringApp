@@ -2,15 +2,15 @@ const conn = require('../config/database');
 
 module.exports = {
     register: (req, username, password, role) => {
-        const {name, description, skill, location, dateofbirth, showcase, logo} = req.body
+        const {name, description, skill, location, showcase, logo} = req.body
 
         return new Promise ((resolve, reject) => {
             conn.query(`INSERT INTO User SET username=?,password=?,role=?`, [username, password, role],(err) => {
                 if(!err) {
                     if(role==='engineer') {
                         console.log(req.body)
-                        conn.query(`INSERT INTO dbengineer (name_engineer, desc_engineer, skill_engineer, loc_engineer, dateofbirth, showcase, date_created, date_update)
-                        VALUES ("${name}", "${description}", "${skill}", "${location}", "${dateofbirth}", "${showcase}", NOW(), NOW())`, (err) => {
+                        conn.query(`INSERT INTO dbengineer (name_engineer, desc_engineer, skill_engineer, loc_engineer, showcase, date_created, date_update)
+                        VALUES ("${name}", "${description}", "${skill}", "${location}", "${showcase}", NOW(), NOW())`, (err) => {
                             if(!err){
 
                                 let message = {

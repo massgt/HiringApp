@@ -28,7 +28,6 @@ module.exports = {
         login : (req, res) => {
             const role = req.body.role
             const username = req.body.username
-            //console.log(username);
             const password = req.body.password
             if(!username){
                 res.json({

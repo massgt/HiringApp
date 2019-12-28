@@ -8,14 +8,25 @@ module.exports = {
         const offset = (page -1) * limit;
 
         return new Promise ((resolve, reject) => {
-            conn.query (`SELECT dbengineer.id_engineer, dbengineer.name_engineer, dbengineer.desc_engineer, dbengineer.loc_engineer,
-            GROUP_CONCAT(DISTINCT skill.Skill) AS Skills,
-            dbengineer.dateofbirth, dbengineer.showcase, dbengineer.date_created,
-            dbengineer.date_update FROM dbengineer LEFT JOIN skill ON dbengineer.id_engineer = skill.id_engineer
-            GROUP BY dbengineer.id_engineer ORDER BY \`dbengineer\`.\`name_engineer\` ${sort}, \`skill_engineer\` ${sort},
-            \`date_update\` ${sort} LIMIT ${limit} OFFSET ${offset}`, (err, response) => {
+            conn.query (`SELECT COUNT(id_engineer) AS Total from dbengineer`, (err, response) => {
                 if (!err) {
-                    resolve (response);
+                    let total = response[0].Total
+                    conn.query(`SELECT dbengineer.id_engineer, dbengineer.name_engineer, dbengineer.desc_engineer, dbengineer.loc_engineer,
+                    GROUP_CONCAT(DISTINCT skill.Skill) AS Skills,
+                    dbengineer.dateofbirth, dbengineer.showcase, dbengineer.date_created,
+                    dbengineer.date_update FROM dbengineer LEFT JOIN skill ON dbengineer.id_engineer = skill.id_engineer
+                    GROUP BY dbengineer.id_engineer ORDER BY \`dbengineer\`.\`name_engineer\` ${sort}, \`skill_engineer\` ${sort},
+                    \`date_update\` ${sort} LIMIT ${limit} OFFSET ${offset}`, (err, results)=>{
+                        if(!err){
+                            let result = {
+                                totalpage:total,
+                                results
+                            }
+                            resolve(result)    
+                        }else{
+                            reject(err)
+                        }
+                    })
                 } else {
                     reject (err);
                 }
